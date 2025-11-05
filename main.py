@@ -55,7 +55,6 @@ def retrieve_api():
         
         break
 
-
 def read_google_sheet(spreadsheet_id: str,
                       range_name: str = None,
                       creds_json_path: str = None,
@@ -167,7 +166,6 @@ def read_google_sheet(spreadsheet_id: str,
 
     return {'header': header, 'rows': normalized_rows}
 
-
 def create_sheet_database(spreadsheet_id: str,
                          db_path: str = None,
                          table_name: str = None,
@@ -246,37 +244,7 @@ def main():
     
     # Get and validate spreadsheet ID
     spreadsheet_id = os.getenv("spreadsheet_id")
-    if not spreadsheet_id:
-        raise ValueError("Missing spreadsheet_id environment variable. Please set it in your .env file.")
-    
-    # Get absolute paths
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(current_dir, "data")
-    creds_path = os.path.join(current_dir, "credentials.json")
-    
-    # Ensure credentials exist
-    if not os.path.exists(creds_path):
-        raise FileNotFoundError(f"credentials.json not found at {creds_path}")
-    
-    # Ensure the data directory exists with proper permissions
-    os.makedirs(data_dir, exist_ok=True)
-    
-    try:
-        db_path = create_sheet_database(
-            spreadsheet_id,
-            db_path=os.path.join(data_dir, f"{datetime.now().strftime('%m-%d-%Y')}_adoption_data.db"),
-            creds_json_path=creds_path
-        )
-        print(f"\nDatabase created at: {db_path}")
-    except gspread.exceptions.SpreadsheetNotFound:
-        print(f"Error: Spreadsheet with ID '{spreadsheet_id}' not found or not accessible.")
-        print("Please check:")
-        print("1. The spreadsheet ID is correct")
-        print("2. The service account email in credentials.json has been given access to the spreadsheet")
-        raise
-    except Exception as e:
-        print(f"Error: {str(e)}")
-        raise
+
 
 
 if __name__ == "__main__":
