@@ -13,3 +13,18 @@ if __name__ == "__main__":
     
     
     
+
+
+
+'''
+Main Response Details
+pet_name
+large_results_photo_url : may need to pad image based on resolution
+primary_breed
+secondary_breed
+age
+pet_id
+
+
+
+'''

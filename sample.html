@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My name is Winter in CT! | Adopt a Pet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --mint: #6ddad3;
+      --mint-dark: #40b3ac;
+      --bg: #f6f4f2;
+      --text: #1f1f1f;
+      --muted: #666;
+      --card: #fff;
+      --accent: #000;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: #fff;
+      color: var(--text);
+    }
+    a {
+      color: #0a5a54;
+      text-decoration: none;
+    }
+    /* Top bar */
+    .topbar {
+      background: var(--mint);
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      gap: 32px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #000;
+    }
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      font-size: 0.95rem;
+    }
+    .nav-links a {
+      color: #000;
+      font-weight: 500;
+    }
+    .topbar-right {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #000;
+      border-radius: 999px;
+      padding: 6px 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-solid {
+      background: #000;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 20px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Page layout */
+    .page {
+      max-width: 1180px;
+      margin: 28px auto 60px;
+      padding: 0 18px;
+    }
+
+    .heading-block h1 {
+      font-size: 2.2rem;
+      margin-bottom: 4px;
+    }
+    .heading-block small {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) 330px;
+      gap: 32px;
+      margin-top: 26px;
+    }
+
+    /* Left column */
+    .media {
+      background: #fff;
+    }
+    .main-photo {
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      max-height: 380px;
+    }
+    .main-photo img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      max-height: 380px;
+    }
+    .heart-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .thumbs {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .thumb {
+      width: 76px;
+      height: 60px;
+      background: #ddd;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .section-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px 20px 20px;
+      margin-top: 18px;
+      box-shadow: 0 2px 0 rgba(0,0,0,0.02);
+      border: 1px solid #f0f0f0;
+    }
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .info-item small {
+      text-transform: uppercase;
+      font-size: 0.65rem;
+      letter-spacing: 0.07em;
+      color: #858585;
+      display: block;
+      margin-bottom: 3px;
+    }
+    .info-item div {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .chips {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      background: #e6f5f4;
+      border-radius: 999px;
+      padding: 6px 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #14413f;
+    }
+    .story p {
+      margin: 0 0 10px;
+      line-height: 1.5;
+      font-size: 0.86rem;
+    }
+
+    /* Right column */
+    .sidebar-card {
+      background: #56d3cd;
+      border-radius: 12px;
+      padding: 18px 18px 22px;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 190px;
+    }
+    .sidebar-card h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0;
+    }
+    .rescuer {
+      font-weight: 700;
+    }
+    .process-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+    }
+    .process-list li {
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .fee-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+    .fee-box strong {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 3px;
+    }
+    .apply-btn {
+      background: #000;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    /* Social */
+    .social-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .circle-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f2f2f2;
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-card {
+        order: -1;
+      }
+      .topbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 18px 14px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top navigation -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo">Adopt a Pet</div>
+      <nav class="nav-links">
+        <a href="#">Find a pet</a>
+        <a href="#">Find a shelter</a>
+        <a href="#">How-to</a>
+        <a href="#">Pet advice</a>
+        <a href="#">Foster</a>
+        <a href="#">Shop</a>
+      </nav>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-outline">Login</button>
+      <button class="btn-solid">Sign up</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="heading-block">
+      <h1>My name is Winter in CT!</h1>
+      <small>Posted over 2 months ago | Updated over 2 weeks ago</small>
+    </div>
+
+    <div class="content">
+      <!-- LEFT -->
+      <div>
+        <!-- Media -->
+        <div class="media">
+          <div class="main-photo">
+            <!-- Replace with real image source -->
+            <img src="https://via.placeholder.com/900x500?text=Winter" alt="Winter the dog" />
+            <div class="heart-btn" aria-label="Add to favorites">♡</div>
+          </div>
+          <div class="thumbs">
+            <div class="thumb">
+              <img src="https://via.placeholder.com/200x120?text=Winter+1" alt="Winter thumbnail 1">
+            </div>
+            <div class="thumb">
+              <img src="https://via.placeholder.com/200x120?text=Winter+2" alt="Winter thumbnail 2">
+            </div>
+            <div class="thumb">
+              <img src="https://via.placeholder.com/200x120?text=Winter+3" alt="Winter thumbnail 3">
+            </div>
+            <div class="thumb">
+              <img src="https://via.placeholder.com/200x120?text=Winter+4" alt="Winter thumbnail 4">
+            </div>
+          </div>
+        </div>
+
+        <!-- Basic info -->
+        <div class="section-card" id="basic-info">
+          <h2 class="section-title">My basic info</h2>
+          <div class="info-grid">
+            <div class="info-item">
+              <small>Breed</small>
+              <div>Labrador Retriever</div>
+            </div>
+            <div class="info-item">
+              <small>Color</small>
+              <div>Tan/Yellow/Fawn</div>
+            </div>
+            <div class="info-item">
+              <small>Age</small>
+              <div>5 months old, Puppy</div>
+            </div>
+            <div class="info-item">
+              <small>Sex</small>
+              <div>Female</div>
+            </div>
+            <div class="info-item">
+              <small>Size</small>
+              <div>Med. 26-60 lbs (12-27 kg) (when grown)</div>
+            </div>
+            <div class="info-item">
+              <small>Pet ID</small>
+              <div>–</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="section-card" id="details">
+          <h2 class="section-title">My details</h2>
+          <div class="chips">
+            <span class="chip">✔ Good with kids</span>
+            <span class="chip">✔ Good with dogs</span>
+            <span class="chip">✔ Shots current</span>
+            <span class="chip">✔ Spayed / Neutered</span>
+          </div>
+        </div>
+
+        <!-- Story -->
+        <div class="section-card story" id="story">
+          <h2 class="section-title">My story</h2>
+          <div class="social-row">
+            <div class="circle-icon" title="Share on Facebook">f</div>
+            <div class="circle-icon" title="Share on Twitter">x</div>
+            <div class="circle-icon" title="Share on Pinterest">p</div>
+            <div class="circle-icon" title="Email this">✉</div>
+          </div>
+          <p><strong>Here's what the humans have to say about me:</strong></p>
+          <p>Winter is a 5 month old female Lab mix who weighs around 25 lbs currently. This adorable pup is full of playful energy and has such a sweet personality. Winter gets along wonderfully with other dogs and absolutely adores children, making her a perfect addition to any family.</p>
+          <p>Winter is spayed, up to date on vaccines and microchipped.</p>
+          <p>Our pups come with one month of free pet insurance when you adopt.</p>
+          <p>If you're interested in adopting, please fill out an application on our website at <a href="https://packleadersrescue.com/adoption-application/" target="_blank" rel="noreferrer noopener">https://packleadersrescue.com/adoption-application/</a></p>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <aside>
+        <div class="sidebar-card">
+          <h2>Cared for by</h2>
+          <div class="rescuer"><a href="#" style="color:inherit; text-decoration:underline;">Pack Leaders Rescue of Connecticut</a></div>
+
+          <div>
+            <strong>Adoption process</strong>
+            <ul class="process-list">
+              <li>● Submit application</li>
+            </ul>
+          </div>
+
+          <div class="fee-box">
+            <strong>Adoption fee: $595</strong>
+            <span>This helps Pack Leaders Rescue of Connecticut with pet care costs.</span>
+          </div>
+
+          <button class="apply-btn">Apply Online</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

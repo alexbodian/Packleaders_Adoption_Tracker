@@ -10,7 +10,16 @@ from google.oauth2.service_account import Credentials
 import sqlite3
 import re
 
+def retrieve_api_main():
+    load_dotenv()
 
+    # Retrieve the API key from the environment variables
+    api_key = os.getenv("API_KEY")
+    SHELTER_ID = os.getenv("SHELTER_ID")
+    url = "https://api.adoptapet.com/search/pets_at_shelter?key="+api_key+"&output=json&end_number=100&shelter_id="+SHELTER_ID
+    print(url)
+
+    #perform a get request on url and format the js
 
 def retrieve_api():
     # Load environment variables from a .env file
@@ -26,34 +35,39 @@ def retrieve_api():
     json_data = response.json()
     # formatted_json = json.dumps(json_data, indent=4)
 
-    '''
-    Format for getting the website link to adoption:
-    uri =
-    "https://api.adoptapet.com/search/limited_pet_details?pet_id=" +
-    petID +
-    "&key=" +
-    api_key +
-    "&v=1&output=json";
-    '''
+    # Create a list to hold pet details
+    pet_details = []
 
-    for pet in json_data['pets']:        
-        pet_format = json.dumps(pet, indent=1)
-        print(pet_format)
-        details_url = pet['details_url']
-        details_response = requests.get(details_url, verify=certifi.where())
+    # Format for getting the website link to adoption
+    uri_template = "https://api.adoptapet.com/search/limited_pet_details?pet_id={pet_id}&key={api_key}&v=1&output=json"
+
+    for pet in json_data['pets']:
+        pet_id = pet['pet_id']
+        uri = uri_template.format(pet_id=pet_id, api_key=api_key)
+        details_response = requests.get(uri, verify=certifi.where())
         details_json_data = details_response.json()
-        formatted_details_json = json.dumps(details_json_data, indent=1)
-        # construct a timestamped filename in the format MM-dd-yyyy Name species.json
-        pet_name = details_json_data.get('pet', {}).get('pet_name', pet.get('pet_name', 'unknown'))
-        pet_species = details_json_data.get('pet', {}).get('species', pet.get('species', ''))
-        # sanitize simple problematic characters in filename
-        pet_name_safe = str(pet_name).replace('/', '-').replace('\\', '-').strip()
-        pet_species_safe = str(pet_species).replace('/', '-').replace('\\', '-').strip()
-        tfilename = f"{datetime.now().strftime('%m-%d-%Y')}  {pet_name_safe}  {pet_species_safe}.json"
-        with open(tfilename, 'w') as f:
-            f.write(formatted_details_json)
-        
-        break
+        pet_details.append(details_json_data)
+
+    # Write all pet details to a single JSON file
+    with open('pets_details.json', 'w') as f:
+        json.dump(pet_details, f, indent=4)
+
+    # for pet in json_data['pets']:        
+    #     pet_format = json.dumps(pet, indent=1)
+    #     print(pet_format)
+    #     details_url = pet['details_url']
+    #     details_response = requests.get(details_url, verify=certifi.where())
+    #     details_json_data = details_response.json()
+    #     formatted_details_json = json.dumps(details_json_data, indent=1)
+    #     # construct a timestamped filename in the format MM-dd-yyyy Name species.json
+    #     pet_name = details_json_data.get('pet', {}).get('pet_name', pet.get('pet_name', 'unknown'))
+    #     pet_species = details_json_data.get('pet', {}).get('species', pet.get('species', ''))
+    #     # sanitize simple problematic characters in filename
+    #     pet_name_safe = str(pet_name).replace('/', '-').replace('\\', '-').strip()
+    #     pet_species_safe = str(pet_species).replace('/', '-').replace('\\', '-').strip()
+    #     tfilename = f"{datetime.now().strftime('%m-%d-%Y')}  {pet_name_safe}  {pet_species_safe}.json"
+    #     with open(tfilename, 'w') as f:
+    #         f.write(formatted_details_json)
 
 def read_google_sheet(spreadsheet_id: str,
                       range_name: str = None,
@@ -239,6 +253,7 @@ def create_sheet_database(spreadsheet_id: str,
 
 def main():
     # retrieve_api()
+    retrieve_api_main()
     # Load environment variables
     load_dotenv()
     
