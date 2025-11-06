@@ -29,7 +29,7 @@ size
 --Pet Details--
 species : eg. dog, cat
 color
-
+description
 
 pet_details_url : link on website
 images : list of bottom image thumbnails 
